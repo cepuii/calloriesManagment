@@ -1,5 +1,6 @@
 package edu.cepuii.calloriesmanagment.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -23,11 +24,21 @@ public class UserMeal {
     return dateTime;
   }
   
+  public LocalDate getDate() {
+    return dateTime.toLocalDate();
+  }
+  
   public String getDescription() {
     return description;
   }
   
-  public int getCallories() {
+  public int getCalories() {
     return callories;
+  }
+  
+  @Override
+  public String toString() {
+    return "{ date time: " + getDateTime() + ", description: " + getDescription() + ", calorie: "
+        + getCalories() + "}";
   }
 }
