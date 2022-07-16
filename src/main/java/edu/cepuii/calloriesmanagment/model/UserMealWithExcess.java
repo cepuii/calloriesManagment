@@ -15,8 +15,13 @@ public class UserMealWithExcess extends UserMeal {
     this.excess = excess;
   }
   
+  public UserMealWithExcess(UserMeal meal, boolean excess) {
+    super(meal.getDateTime(), meal.getDescription(), meal.getCalories());
+    this.excess = excess;
+  }
+  
   @Override
   public String toString() {
-    return super.toString() + ", excess: " + excess + "}";
+    return super.toString().replace("}", "") + ", excess: " + excess + "}";
   }
 }
