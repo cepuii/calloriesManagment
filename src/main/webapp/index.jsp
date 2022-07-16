@@ -2,11 +2,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>JSP - Hello World</title>
+    <title>Calories management</title>
 </head>
 <body>
 <h1><%= "Hello World!" %>
 </h1>
-<br/>
+<hr/>
+<ul>
+    <li><a href="users">Users</a></li>
+</ul>
 </body>
 </html>
