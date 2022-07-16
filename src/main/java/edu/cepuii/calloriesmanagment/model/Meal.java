@@ -1,11 +1,12 @@
 package edu.cepuii.calloriesmanagment.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
  * @author cepuii on 13.07.2022
  */
-public class UserMeal {
+public class Meal {
   
   private final LocalDateTime dateTime;
   
@@ -13,7 +14,7 @@ public class UserMeal {
   
   private final int callories;
   
-  public UserMeal(LocalDateTime dateTime, String description, int callories) {
+  public Meal(LocalDateTime dateTime, String description, int callories) {
     this.dateTime = dateTime;
     this.description = description;
     this.callories = callories;
@@ -23,11 +24,21 @@ public class UserMeal {
     return dateTime;
   }
   
+  public LocalDate getDate() {
+    return dateTime.toLocalDate();
+  }
+  
   public String getDescription() {
     return description;
   }
   
-  public int getCallories() {
+  public int getCalories() {
     return callories;
+  }
+  
+  @Override
+  public String toString() {
+    return "{ date time: " + getDateTime() + ", description: " + getDescription() + ", calorie: "
+        + getCalories() + "}";
   }
 }
