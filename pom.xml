@@ -16,6 +16,7 @@
     <maven.compiler.source>1.8</maven.compiler.source>
     <junit.version>5.8.2</junit.version>
     <maven-war-plugin.version>3.3.2</maven-war-plugin.version>
+    <logback.version>1.2.11</logback.version>
     <log4j.version>2.17.2</log4j.version>
   </properties>
 
@@ -45,20 +46,11 @@
 
     <!-- logger -->
     <dependency>
-      <groupId>org.apache.logging.log4j</groupId>
-      <artifactId>log4j-api</artifactId>
-      <version>${log4j.version}</version>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>${logback.version}</version>
     </dependency>
-    <dependency>
-      <groupId>org.apache.logging.log4j</groupId>
-      <artifactId>log4j-core</artifactId>
-      <version>${log4j.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.logging.log4j</groupId>
-      <artifactId>log4j-slf4j-impl</artifactId>
-      <version>${log4j.version}</version>
-    </dependency>
+
   </dependencies>
 
   <build>

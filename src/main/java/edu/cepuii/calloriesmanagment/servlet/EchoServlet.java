@@ -15,12 +15,12 @@ import org.slf4j.LoggerFactory;
 @WebServlet(urlPatterns = "/users")
 public class EchoServlet extends HttpServlet {
   
-  private static final Logger logger = LoggerFactory.getLogger(EchoServlet.class);
+  private static final Logger log = LoggerFactory.getLogger(EchoServlet.class);
   
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
-    logger.info("redirect to users.jsp");
+    log.debug("redirect to users");
 //    req.getRequestDispatcher("users.jsp").forward(req,resp);
     resp.sendRedirect("users.jsp");
   }
