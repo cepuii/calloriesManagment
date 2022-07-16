@@ -7,6 +7,7 @@ import java.time.LocalTime;
 import java.time.Month;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 /**
@@ -35,13 +36,21 @@ public class UserMealsUtil {
   
   public static List<UserMealWithExcess> filteredByCycles(List<UserMeal> meals, LocalTime startTime,
       LocalTime endTime, int caloriesPerDay) {
-    // TODO return filtered list with excess. Implement by cycles
-    return null;
+    List<UserMealWithExcess> mealsList = MealUtil.checkExcess(meals, caloriesPerDay);
+    return mealsList.stream()
+        .filter(meal -> TimeUtil.isBetweenHalfOpen(meal.getDateTime().toLocalTime(), startTime,
+            endTime))
+        .collect(Collectors.toList());
   }
   
   public static List<UserMealWithExcess> filteredByStreams(List<UserMeal> meals,
       LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
-    // TODO Implement by streams
-    return null;
+    List<UserMealWithExcess> mealsList = MealUtil.checkExcess(meals, caloriesPerDay);
+    return mealsList.stream()
+        .filter(meal -> TimeUtil.isBetweenHalfOpen(meal.getDateTime().toLocalTime(), startTime,
+            endTime))
+        .collect(Collectors.toList());
   }
+  
+  
 }
