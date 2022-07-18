@@ -1,27 +1,27 @@
 package edu.cepuii.calloriesmanagment.servlet;
 
+import edu.cepuii.calloriesmanagment.dao.InMemory;
+import edu.cepuii.calloriesmanagment.model.MealTO;
+import edu.cepuii.calloriesmanagment.util.MealUtil;
 import java.io.IOException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author cepuii on 16.07.2022
  */
-@WebServlet(urlPatterns = "/users")
-public class EchoServlet extends HttpServlet {
-  
-  private static final Logger log = LoggerFactory.getLogger(EchoServlet.class);
+@WebServlet(urlPatterns = "/meals")
+public class MealServlet extends HttpServlet {
   
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
-    log.debug("redirect to users");
-//    req.getRequestDispatcher("users.jsp").forward(req,resp);
-    resp.sendRedirect("users.jsp");
+    List<MealTO> meals = MealUtil.checkExcess(InMemory.getMeals(), InMemory.CALORIES_PER_DAY);
+    req.setAttribute("meals", meals);
+    req.getRequestDispatcher("meals.jsp").forward(req, resp);
   }
 }
