@@ -10,10 +10,11 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>Meals</title>
 </head>
 <body>
-<table>
+<table style="border: black solid">
     <tr>
         <th>Date and time</th>
         <th>Description</th>
@@ -26,14 +27,17 @@
             <td><fmt:parseDate value="${meal.dateTime}" pattern="yyyy-MM-dd'T'HH:mm"
                                var="parsedDateTime" type="both"/>
                 <fmt:formatDate pattern="dd.MM.yyyy HH:mm" value="${ parsedDateTime }"/></td>
-            <td>${meal.description}</td>
+            <td><c:out value="${meal.description}"/></td>
             <td>${meal.calories}</td>
             <td><c:if test="${meal.excess eq true}"> Превышен </c:if>
                 <c:if test="${meal.excess eq false}"> Норма </c:if>
             </td>
+            <td><a href="meals?action=update&id=${meal.id}">Update</a></td>
+            <td><a href="meals?action=delete&id=${meal.id}">Delete</a></td>
         </tr>
     </c:forEach>
-
 </table>
+<p><a href="meals?action=add">Add meal</a></p>
+
 </body>
 </html>
