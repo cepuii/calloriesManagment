@@ -1,4 +1,4 @@
-package edu.cepuii.calloriesmanagment.dao;
+package edu.cepuii.calloriesmanagment.repository;
 
 import edu.cepuii.calloriesmanagment.model.Meal;
 import edu.cepuii.calloriesmanagment.util.MealUtil;
@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * @author cepuii on 16.07.2022
  */
-public class InMemory implements RepositoryMeal {
+public class InMemory implements MealRepository {
   
   public static final int CALORIES_PER_DAY = 2000;
   private final static AtomicInteger generateId = new AtomicInteger(1);

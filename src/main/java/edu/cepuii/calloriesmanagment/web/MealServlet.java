@@ -1,9 +1,9 @@
-package edu.cepuii.calloriesmanagment.servlet;
+package edu.cepuii.calloriesmanagment.web;
 
-import edu.cepuii.calloriesmanagment.dao.InMemory;
-import edu.cepuii.calloriesmanagment.dao.RepositoryMeal;
 import edu.cepuii.calloriesmanagment.model.Meal;
 import edu.cepuii.calloriesmanagment.model.MealTO;
+import edu.cepuii.calloriesmanagment.repository.InMemory;
+import edu.cepuii.calloriesmanagment.repository.MealRepository;
 import edu.cepuii.calloriesmanagment.util.MealUtil;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(urlPatterns = "/meals")
 public class MealServlet extends HttpServlet {
   
-  RepositoryMeal repository = new InMemory();
+  MealRepository repository = new InMemory();
   
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)

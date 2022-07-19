@@ -1,4 +1,4 @@
-package edu.cepuii.calloriesmanagment.dao;
+package edu.cepuii.calloriesmanagment.repository;
 
 import edu.cepuii.calloriesmanagment.model.Meal;
 import java.util.Collection;
@@ -6,7 +6,7 @@ import java.util.Collection;
 /**
  * @author cepuii on 18.07.2022
  */
-public interface RepositoryMeal {
+public interface MealRepository {
   
   Meal save(Meal meal);
   

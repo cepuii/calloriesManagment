@@ -1,4 +1,4 @@
-package edu.cepuii.calloriesmanagment.servlet;
+package edu.cepuii.calloriesmanagment.web;
 
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
