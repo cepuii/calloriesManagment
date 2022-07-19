@@ -2,15 +2,13 @@ package edu.cepuii.calloriesmanagment.model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author cepuii on 13.07.2022
  */
 public class Meal {
   
-  private final static AtomicInteger generateId = new AtomicInteger(1);
-  private int id;
+  private Integer id;
   private LocalDateTime dateTime;
   private String description;
   private int callories;
@@ -26,7 +24,7 @@ public class Meal {
   }
   
   public Meal(LocalDateTime dateTime, String description, int callories) {
-    this.id = generateId.getAndIncrement();
+    this.id = null;
     this.dateTime = dateTime;
     this.description = description;
     this.callories = callories;
@@ -60,9 +58,14 @@ public class Meal {
     return callories;
   }
   
+  public boolean isNew() {
+    return id == null;
+  }
+  
   @Override
   public String toString() {
-    return "{ date time: " + getDateTime() + ", description: " + getDescription() + ", calorie: "
+    return "{ id: " + getId() + ", date time: " + getDateTime() + ", description: "
+        + getDescription() + ", calorie: "
         + getCalories() + "}";
   }
   
