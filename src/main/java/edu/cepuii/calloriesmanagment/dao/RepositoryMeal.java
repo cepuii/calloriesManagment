@@ -1,20 +1,18 @@
 package edu.cepuii.calloriesmanagment.dao;
 
 import edu.cepuii.calloriesmanagment.model.Meal;
-import java.util.List;
+import java.util.Collection;
 
 /**
  * @author cepuii on 18.07.2022
  */
 public interface RepositoryMeal {
   
-  void add(Meal meal);
+  Meal save(Meal meal);
   
-  void delete(int id);
+  boolean delete(int id);
   
-  void update(Meal meal);
-  
-  List<Meal> getAllMeals();
+  Collection<Meal> getAllMeals();
   
   Meal getMealById(int id);
   

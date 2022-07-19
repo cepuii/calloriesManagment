@@ -1,11 +1,11 @@
 package edu.cepuii.calloriesmanagment.dao;
 
 import edu.cepuii.calloriesmanagment.model.Meal;
-import java.time.LocalDateTime;
-import java.time.Month;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import edu.cepuii.calloriesmanagment.util.MealUtil;
+import java.util.Collection;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author cepuii on 16.07.2022
@@ -13,54 +13,35 @@ import java.util.List;
 public class InMemory implements RepositoryMeal {
   
   public static final int CALORIES_PER_DAY = 2000;
-  private static final List<Meal> meals;
+  private final static AtomicInteger generateId = new AtomicInteger(1);
+  private final Map<Integer, Meal> repository = new ConcurrentHashMap<>();
   
-  static {
-    meals = new ArrayList<>(Arrays.asList(
-        new Meal(LocalDateTime.of(2020, Month.JANUARY, 30, 10, 0), "Завтрак", 500),
-        new Meal(LocalDateTime.of(2020, Month.JANUARY, 30, 13, 0), "Обед", 1000),
-        new Meal(LocalDateTime.of(2020, Month.JANUARY, 30, 20, 0), "Ужин", 500),
-        new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 0, 0), "Еда на граничное значение",
-            100),
-        new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 10, 0), "Завтрак", 1000),
-        new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 13, 0), "Обед", 500),
-        new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 20, 0), "Ужин", 410)
-    ));
+  {
+    MealUtil.getMeals().forEach(this::save);
   }
   
   @Override
-  public void add(Meal meal) {
-    Meal newMeal = new Meal(meal.getDateTime(), meal.getDescription(), meal.getCalories());
-    meals.add(newMeal);
-  }
-  
-  @Override
-  public void delete(int id) {
-    meals.removeIf(meal -> meal.getId() == id);
-  }
-  
-  @Override
-  public void update(Meal meal) {
-    Meal currMeal = getMealById(meal.getId());
-    if (meal.getDateTime() != null) {
-      currMeal.setDateTime(meal.getDateTime());
+  public Meal save(Meal meal) {
+    if (meal.isNew()) {
+      meal.setId(generateId.incrementAndGet());
+      repository.put(meal.getId(), meal);
+      return meal;
     }
-    String mealDescription = meal.getDescription();
-    if (mealDescription != null && !mealDescription.isEmpty()) {
-      currMeal.setDescription(mealDescription);
-    }
-    if (meal.getCalories() != 0) {
-      currMeal.setCallories(meal.getCalories());
-    }
+    return repository.computeIfPresent(meal.getId(), (id, oldMeal) -> meal);
   }
   
   @Override
-  public List<Meal> getAllMeals() {
-    return meals;
+  public boolean delete(int id) {
+    return repository.remove(id, getMealById(id));
+  }
+  
+  @Override
+  public Collection<Meal> getAllMeals() {
+    return repository.values();
   }
   
   @Override
   public Meal getMealById(int id) {
-    return meals.stream().filter(meal -> meal.getId() == id).findFirst().get();
+    return repository.get(id);
   }
 }
