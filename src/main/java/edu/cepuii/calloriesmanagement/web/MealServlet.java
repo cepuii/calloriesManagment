@@ -1,9 +1,9 @@
 package edu.cepuii.calloriesmanagement.web;
 
 import edu.cepuii.calloriesmanagement.model.Meal;
-import edu.cepuii.calloriesmanagement.model.MealTO;
 import edu.cepuii.calloriesmanagement.repository.MealRepository;
 import edu.cepuii.calloriesmanagement.repository.inmemory.InMemoryMealRepository;
+import edu.cepuii.calloriesmanagement.to.MealTO;
 import edu.cepuii.calloriesmanagement.util.MealUtil;
 import java.io.IOException;
 import java.time.LocalDateTime;

@@ -1,7 +1,7 @@
 package edu.cepuii.calloriesmanagement.util;
 
 import edu.cepuii.calloriesmanagement.model.Meal;
-import edu.cepuii.calloriesmanagement.model.MealTO;
+import edu.cepuii.calloriesmanagement.to.MealTO;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;

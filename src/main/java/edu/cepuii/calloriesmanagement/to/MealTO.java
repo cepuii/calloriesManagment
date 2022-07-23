@@ -1,5 +1,6 @@
-package edu.cepuii.calloriesmanagement.model;
+package edu.cepuii.calloriesmanagement.to;
 
+import edu.cepuii.calloriesmanagement.model.Meal;
 import java.time.LocalDateTime;
 
 /**

@@ -6,25 +6,25 @@ import java.time.LocalDateTime;
 /**
  * @author cepuii on 13.07.2022
  */
-public class Meal {
+public class Meal extends AbstractBaseEntity {
   
-  private Integer id;
   private LocalDateTime dateTime;
   private String description;
   private int callories;
   
   public Meal() {
+    super(null);
   }
   
   public Meal(int id, LocalDateTime dateTime, String description, int callories) {
-    this.id = id;
+    super(id);
     this.dateTime = dateTime;
     this.description = description;
     this.callories = callories;
   }
   
   public Meal(LocalDateTime dateTime, String description, int callories) {
-    this.id = null;
+    super(null);
     this.dateTime = dateTime;
     this.description = description;
     this.callories = callories;
@@ -64,16 +64,8 @@ public class Meal {
   
   @Override
   public String toString() {
-    return "{ id: " + getId() + ", date time: " + getDateTime() + ", description: "
+    return super.toString() + ", date time: " + getDateTime() + ", description: "
         + getDescription() + ", calorie: "
         + getCalories() + "}";
-  }
-  
-  public int getId() {
-    return id;
-  }
-  
-  public void setId(int id) {
-    this.id = id;
   }
 }
