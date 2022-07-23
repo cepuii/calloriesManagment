@@ -5,7 +5,7 @@ import static edu.cepuii.calloriesmanagement.util.ValidationUtil.checkNotFoundWi
 
 import edu.cepuii.calloriesmanagement.model.User;
 import edu.cepuii.calloriesmanagement.service.UserService;
-import java.util.List;
+import java.util.Collection;
 
 /**
  * @author cepuii on 19.07.2022
@@ -34,7 +34,7 @@ public class AbstractUserController {
     return checkNotFound(service.getByEmail(email), "email=" + email);
   }
   
-  public List<User> getAll() {
+  public Collection<User> getAll() {
     return service.getAll();
   }
   

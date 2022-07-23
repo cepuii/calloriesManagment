@@ -1,7 +1,7 @@
 package edu.cepuii.calloriesmanagement.repository;
 
 import edu.cepuii.calloriesmanagement.model.User;
-import java.util.List;
+import java.util.Collection;
 
 /**
  * @author cepuii on 19.07.2022
@@ -16,6 +16,6 @@ public interface UserRepository {
   
   User getByEmail(String email);
   
-  List<User> getAll();
+  Collection<User> getAll();
   
 }

@@ -2,7 +2,7 @@ package edu.cepuii.calloriesmanagement.service;
 
 import edu.cepuii.calloriesmanagement.model.User;
 import edu.cepuii.calloriesmanagement.repository.UserRepository;
-import java.util.List;
+import java.util.Collection;
 import org.springframework.stereotype.Service;
 
 /**
@@ -11,11 +11,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
   
+  private final UserRepository repository;
   public UserService(UserRepository repository) {
     this.repository = repository;
   }
   
-  private final UserRepository repository;
   
   public User save(User user) {
     return repository.save(user);
@@ -33,7 +33,7 @@ public class UserService {
     return repository.getByEmail(email);
   }
   
-  public List<User> getAll() {
+  public Collection<User> getAll() {
     return repository.getAll();
   }
 }

@@ -2,7 +2,7 @@ package edu.cepuii.calloriesmanagement.web.user;
 
 import edu.cepuii.calloriesmanagement.model.User;
 import edu.cepuii.calloriesmanagement.service.UserService;
-import java.util.List;
+import java.util.Collection;
 import org.springframework.stereotype.Controller;
 
 /**
@@ -17,7 +17,7 @@ public class AdminRestController extends AbstractUserController {
   }
   
   @Override
-  public List<User> getAll() {
+  public Collection<User> getAll() {
     return super.getAll();
   }
   
