@@ -1,10 +1,8 @@
 package edu.cepuii.calloriesmanagement.web;
 
 import edu.cepuii.calloriesmanagement.model.Meal;
-import edu.cepuii.calloriesmanagement.repository.MealRepository;
-import edu.cepuii.calloriesmanagement.repository.inmemory.InMemoryMealRepository;
 import edu.cepuii.calloriesmanagement.to.MealTO;
-import edu.cepuii.calloriesmanagement.util.MealUtil;
+import edu.cepuii.calloriesmanagement.web.meal.MealRestController;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -17,28 +15,28 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author cepuii on 16.07.2022
  */
-@WebServlet(urlPatterns = "/meals")
+@WebServlet(name = "meals", urlPatterns = "/meals")
 public class MealServlet extends HttpServlet {
   
-  MealRepository repository = new InMemoryMealRepository();
+  MealRestController restController;
   
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
     req.setCharacterEncoding("UTF-8");
-    String forward = "";
+    String forward;
     String action = req.getParameter("action");
     switch (action == null ? "all" : action) {
       case "update": {
         forward = "addMeal.jsp";
         int id = Integer.parseInt(req.getParameter("id"));
-        Meal meal = repository.getMealById(id);
+        Meal meal = restController.get(id);
         req.setAttribute("meal", meal);
         break;
       }
       case "delete": {
         int id = Integer.parseInt(req.getParameter("id"));
-        repository.delete(id);
+        restController.delete(id);
         resp.sendRedirect("meals");
         return;
       }
@@ -49,11 +47,10 @@ public class MealServlet extends HttpServlet {
       case "all":
       default:
         forward = "meals.jsp";
-        Collection<MealTO> meals = MealUtil.checkExcess(repository.getAllMeals(),
-            InMemoryMealRepository.CALORIES_PER_DAY);
+        Collection<MealTO> meals = restController.getAll();
         req.setAttribute("meals", meals);
     }
-  
+    
     req.getRequestDispatcher(forward).forward(req, resp);
   }
   
@@ -71,7 +68,7 @@ public class MealServlet extends HttpServlet {
       int id = Integer.parseInt(reqParameter);
       meal.setId(id);
     }
-    repository.save(meal);
+    restController.update(meal, SecurityUtil.authUserId());
     resp.sendRedirect("meals");
   }
 }
