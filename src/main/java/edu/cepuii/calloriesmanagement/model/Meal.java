@@ -10,28 +10,35 @@ public class Meal extends AbstractBaseEntity {
   
   private LocalDateTime dateTime;
   private String description;
-  private int callories;
+  private int calories;
+  private int userId;
   
   public Meal() {
     super(null);
   }
   
-  public Meal(int id, LocalDateTime dateTime, String description, int callories) {
+  public Meal(Integer id, LocalDateTime dateTime, String description, int calories, int userId) {
     super(id);
     this.dateTime = dateTime;
     this.description = description;
-    this.callories = callories;
+    this.calories = calories;
+    this.userId = userId;
   }
   
-  public Meal(LocalDateTime dateTime, String description, int callories) {
-    super(null);
-    this.dateTime = dateTime;
-    this.description = description;
-    this.callories = callories;
+  public Meal(LocalDateTime dateTime, String description, int calories, int userId) {
+    this(null, dateTime, description, calories, userId);
   }
   
-  public void setCallories(int callories) {
-    this.callories = callories;
+  public int getUserId() {
+    return userId;
+  }
+  
+  public void setUserId(int userId) {
+    this.userId = userId;
+  }
+  
+  public void setCalories(int calories) {
+    this.calories = calories;
   }
   
   public LocalDateTime getDateTime() {
@@ -55,7 +62,7 @@ public class Meal extends AbstractBaseEntity {
   }
   
   public int getCalories() {
-    return callories;
+    return calories;
   }
   
   public boolean isNew() {
@@ -65,7 +72,7 @@ public class Meal extends AbstractBaseEntity {
   @Override
   public String toString() {
     return super.toString() + ", date time: " + getDateTime() + ", description: "
-        + getDescription() + ", calorie: "
+        + getDescription() + ", calories: "
         + getCalories() + "}";
   }
 }

@@ -21,23 +21,23 @@
         <th>Calories</th>
         <th>Excess</th>
     </tr>
-    <jsp:useBean id="meals" scope="request" type="java.util.List"/>
+    <jsp:useBean id="meals" scope="request" type="java.util.Collection"/>
     <c:forEach items="${meals}" var="meal">
         <tr>
             <td><fmt:parseDate value="${meal.dateTime}" pattern="yyyy-MM-dd'T'HH:mm"
                                var="parsedDateTime" type="both"/>
                 <fmt:formatDate pattern="dd.MM.yyyy HH:mm" value="${ parsedDateTime }"/></td>
-            <td><c:out value="${meal.description}"/></td>
+            <td>${meal.description}</td>
             <td>${meal.calories}</td>
             <td><c:if test="${meal.excess eq true}"> Превышен </c:if>
                 <c:if test="${meal.excess eq false}"> Норма </c:if>
             </td>
-            <td><a href="meals?action=update&id=${meal.id}">Update</a></td>
-            <td><a href="meals?action=delete&id=${meal.id}">Delete</a></td>
+            <td><a href="mealsServlet?action=update&id=${meal.id}">Update</a></td>
+            <td><a href="mealsServlet?action=delete&id=${meal.id}">Delete</a></td>
         </tr>
     </c:forEach>
 </table>
-<p><a href="meals?action=add">Add meal</a></p>
+<p><a href="mealsServlet?action=add">Add meal</a></p>
 
 </body>
 </html>

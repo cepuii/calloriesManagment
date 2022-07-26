@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @author cepuii on 16.07.2022
  */
-@WebServlet(urlPatterns = "/users")
+@WebServlet(name = "users", urlPatterns = "/usersServlet")
 public class UserServlet extends HttpServlet {
   
   private static final Logger log = LoggerFactory.getLogger(UserServlet.class);

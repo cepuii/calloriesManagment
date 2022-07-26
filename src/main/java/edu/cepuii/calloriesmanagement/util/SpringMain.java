@@ -1,6 +1,6 @@
 package edu.cepuii.calloriesmanagement.util;
 
-import edu.cepuii.calloriesmanagement.repository.MealRepository;
+import edu.cepuii.calloriesmanagement.web.meal.MealRestController;
 import java.util.Arrays;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -15,9 +15,9 @@ public class SpringMain {
         "spring/spring-app.xml")) {
       System.out.println(
           "Bean definition names: " + Arrays.toString(appCtx.getBeanDefinitionNames()));
-      
-      MealRepository repository = appCtx.getBean(MealRepository.class);
-      repository.getAllMeals().forEach(System.out::println);
+  
+      MealRestController controller = appCtx.getBean(MealRestController.class);
+      controller.getAll().forEach(System.out::println);
     }
   }
   

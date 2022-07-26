@@ -9,9 +9,9 @@
 </h1>
 <hr/>
 <ul>
-    <li><a href="users">Users</a></li>
+    <li><a href="usersServlet">Users</a></li>
     <li></li>
-    <li><a href="meals">Meals</a></li>
+    <li><a href="mealsServlet">Meals</a></li>
 </ul>
 </body>
 </html>
