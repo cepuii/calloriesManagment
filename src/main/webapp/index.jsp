@@ -8,10 +8,13 @@
 <h1><%= "Hello World!" %>
 </h1>
 <hr/>
-<ul>
-    <li><a href="users">Users</a></li>
-    <li></li>
-    <li><a href="meals">Meals</a></li>
-</ul>
+<form method="post" action="usersServlet">
+    <b style="font-size: large">Meals of&nbsp;</b>
+    <select name="userId">
+        <option value="1">User</option>
+        <option value="2">Admin</option>
+    </select>
+    <button type="submit">Select</button>
+</form>
 </body>
 </html>
