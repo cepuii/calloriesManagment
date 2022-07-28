@@ -1,6 +1,7 @@
 package edu.cepuii.calloriesmanagement.web;
 
 import java.io.IOException;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,5 +23,13 @@ public class UserServlet extends HttpServlet {
     log.debug("redirect to users");
 //    req.getRequestDispatcher("users.jsp").forward(req,resp);
     resp.sendRedirect("users.jsp");
+  }
+  
+  @Override
+  protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+      throws ServletException, IOException {
+    int userId = Integer.parseInt(req.getParameter("userId"));
+    SecurityUtil.setAuthUserId(userId);
+    resp.sendRedirect("mealsServlet");
   }
 }

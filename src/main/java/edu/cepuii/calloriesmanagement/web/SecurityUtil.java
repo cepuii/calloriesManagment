@@ -7,12 +7,17 @@ import edu.cepuii.calloriesmanagement.util.MealUtil;
  */
 public class SecurityUtil {
   
+  private static int userId = 1;
+  
   public static int authUserId() {
-    return 1;
+    return userId;
   }
   
   public static int authUserCaloriesPerDay() {
     return MealUtil.DEFAULT_CALORIES_PER_DAY;
   }
   
+  public static void setAuthUserId(int userId) {
+    SecurityUtil.userId = userId;
+  }
 }
