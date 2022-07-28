@@ -2,8 +2,11 @@ package edu.cepuii.calloriesmanagement.service;
 
 import edu.cepuii.calloriesmanagement.model.Meal;
 import edu.cepuii.calloriesmanagement.repository.MealRepository;
+import edu.cepuii.calloriesmanagement.util.DateTimeUtil;
 import edu.cepuii.calloriesmanagement.util.exception.NotFoundException;
+import java.time.LocalDate;
 import java.util.Collection;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -34,16 +37,22 @@ public class MealService {
     return true;
   }
   
-  public Collection<Meal> getAllMeals(int userId) {
+  public Collection<Meal> getAll(int userId) {
     return repository.getAll(userId);
   }
   
   public Meal getById(int id, int userId) {
-    Meal meal = repository.getById(id, userId);
+    Meal meal = repository.get(id, userId);
     if (meal == null) {
       throw new NotFoundException("Meal not found");
     }
     return meal;
+  }
+  
+  public Collection<Meal> getBetweenInclusive(@Nullable LocalDate startDate,
+      @Nullable LocalDate endDate, int userId) {
+    return repository.getBetweenHalfOpen(DateTimeUtil.atStartOfDayOrMin(startDate),
+        DateTimeUtil.atStartOfNextDayOrMax(endDate), userId);
   }
   
 }

@@ -1,6 +1,7 @@
 package edu.cepuii.calloriesmanagement.repository;
 
 import edu.cepuii.calloriesmanagement.model.Meal;
+import java.time.LocalDateTime;
 import java.util.Collection;
 
 /**
@@ -12,8 +13,10 @@ public interface MealRepository {
   
   boolean delete(int id, int userId);
   
+  Meal get(int id, int userId);
+  
   Collection<Meal> getAll(int userId);
   
-  Meal getById(int id, int userId);
+  Collection<Meal> getBetweenHalfOpen(LocalDateTime start, LocalDateTime end, int userId);
   
 }
