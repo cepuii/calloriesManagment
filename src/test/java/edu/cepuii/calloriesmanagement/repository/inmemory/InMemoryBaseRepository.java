@@ -1,5 +1,7 @@
 package edu.cepuii.calloriesmanagement.repository.inmemory;
 
+import static edu.cepuii.calloriesmanagement.model.AbstractBaseEntity.START_SEQ;
+
 import edu.cepuii.calloriesmanagement.model.AbstractBaseEntity;
 import java.util.Collection;
 import java.util.Map;
@@ -8,7 +10,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class InMemoryBaseRepository<T extends AbstractBaseEntity> {
   
-  static final AtomicInteger counter = new AtomicInteger(0);
+  static final AtomicInteger counter = new AtomicInteger(START_SEQ);
   
   final Map<Integer, T> map = new ConcurrentHashMap<>();
   

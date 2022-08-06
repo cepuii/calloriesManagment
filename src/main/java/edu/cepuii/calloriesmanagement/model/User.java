@@ -19,6 +19,13 @@ public class User extends AbstractNamedEntity {
   private Collection<Role> roles;
   private int caloriesPerDay = MealUtil.DEFAULT_CALORIES_PER_DAY;
   
+  public User() {
+  }
+  
+  public User(User u) {
+    this(u.id, u.name, u.email, u.password, u.enabled, u.registered, u.roles, u.caloriesPerDay);
+  }
+  
   public User(Integer id, String name, String email, String password, Role... roles) {
     this(id, name, email, password, true, new Date(),
         Arrays.asList(roles), MealUtil.DEFAULT_CALORIES_PER_DAY);
