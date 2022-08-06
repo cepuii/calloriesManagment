@@ -14,8 +14,7 @@ import edu.cepuii.calloriesmanagement.model.User;
 import java.util.Collection;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -29,7 +28,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 public class UserServiceTest {
   
-  private static final Logger log = LoggerFactory.getLogger(UserServiceTest.class);
+  static {
+    SLF4JBridgeHandler.install();
+  }
   
   @Autowired
   private UserService service;
