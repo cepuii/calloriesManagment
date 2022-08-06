@@ -16,7 +16,7 @@ public class UserTestData {
   public static final int GUEST_ID = START_SEQ + 2;
   public static final int NOT_FOUND = 10;
   
-  public static final User USER = new User(USER_ID, "User", "user@yandex.ru", "password",
+  public static final User USER = new User(USER_ID, "User", "user@gmail.com", "password",
       Role.USER);
   public static final User ADMIN = new User(ADMIN_ID, "Admin", "admin@gmail.com", "admin",
       Role.ADMIN);
