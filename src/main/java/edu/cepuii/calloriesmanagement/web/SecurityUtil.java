@@ -1,5 +1,6 @@
 package edu.cepuii.calloriesmanagement.web;
 
+import edu.cepuii.calloriesmanagement.model.AbstractBaseEntity;
 import edu.cepuii.calloriesmanagement.util.MealUtil;
 
 /**
@@ -7,7 +8,7 @@ import edu.cepuii.calloriesmanagement.util.MealUtil;
  */
 public class SecurityUtil {
   
-  private static int userId = 1;
+  private static int userId = AbstractBaseEntity.START_SEQ;
   
   public static int authUserId() {
     return userId;
