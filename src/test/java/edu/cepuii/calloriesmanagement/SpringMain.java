@@ -1,4 +1,4 @@
-package edu.cepuii.calloriesmanagement.util;
+package edu.cepuii.calloriesmanagement;
 
 import edu.cepuii.calloriesmanagement.web.meal.MealRestController;
 import java.util.Arrays;
