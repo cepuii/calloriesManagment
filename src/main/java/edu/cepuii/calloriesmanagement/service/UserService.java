@@ -1,7 +1,11 @@
 package edu.cepuii.calloriesmanagement.service;
 
+import static edu.cepuii.calloriesmanagement.util.ValidationUtil.checkNotFound;
+import static edu.cepuii.calloriesmanagement.util.ValidationUtil.checkNotFoundWithId;
+
 import edu.cepuii.calloriesmanagement.model.User;
 import edu.cepuii.calloriesmanagement.repository.UserRepository;
+import edu.cepuii.calloriesmanagement.util.exception.NotFoundException;
 import java.util.Collection;
 import org.springframework.stereotype.Service;
 
@@ -18,19 +22,26 @@ public class UserService {
   
   
   public User save(User user) {
-    return repository.save(user);
+    User newUser = repository.save(user);
+    if (newUser == null) {
+      throw new NotFoundException("User not found");
+    }
+    return newUser;
   }
   
   public boolean delete(int id) {
-    return repository.delete(id);
+    if (!repository.delete(id)) {
+      throw new NotFoundException("Not found user, id" + id);
+    }
+    return true;
   }
   
   public User get(int id) {
-    return repository.get(id);
+    return checkNotFoundWithId(repository.get(id), id);
   }
   
   public User getByEmail(String email) {
-    return repository.getByEmail(email);
+    return checkNotFound(repository.getByEmail(email), email);
   }
   
   public Collection<User> getAll() {
