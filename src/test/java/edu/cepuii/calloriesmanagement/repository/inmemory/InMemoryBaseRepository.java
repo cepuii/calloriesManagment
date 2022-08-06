@@ -8,9 +8,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class InMemoryBaseRepository<T extends AbstractBaseEntity> {
   
-  private static final AtomicInteger counter = new AtomicInteger(0);
+  static final AtomicInteger counter = new AtomicInteger(0);
   
-  private final Map<Integer, T> map = new ConcurrentHashMap<>();
+  final Map<Integer, T> map = new ConcurrentHashMap<>();
   
   public T save(T entity) {
     if (entity.isNew()) {
@@ -27,6 +27,10 @@ public class InMemoryBaseRepository<T extends AbstractBaseEntity> {
   
   public T get(int id) {
     return map.get(id);
+  }
+  
+  void put(T entity) {
+    map.put(entity.getId(), entity);
   }
   
   public Collection<T> getCollection() {

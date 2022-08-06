@@ -1,7 +1,7 @@
 package edu.cepuii.calloriesmanagement.repository.inmemory;
 
-import static edu.cepuii.calloriesmanagement.repository.inmemory.InMemoryUserRepository.ADMIN_ID;
-import static edu.cepuii.calloriesmanagement.repository.inmemory.InMemoryUserRepository.USER_ID;
+import static edu.cepuii.calloriesmanagement.UserTestData.ADMIN_ID;
+import static edu.cepuii.calloriesmanagement.UserTestData.USER_ID;
 
 import edu.cepuii.calloriesmanagement.model.Meal;
 import edu.cepuii.calloriesmanagement.repository.MealRepository;
@@ -14,7 +14,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
@@ -29,7 +28,7 @@ public class InMemoryMealRepository implements MealRepository {
   
   private static final Logger log = LoggerFactory.getLogger(InMemoryMealRepository.class);
   private final Map<Integer, InMemoryBaseRepository<Meal>> usersMealsMap = new ConcurrentHashMap<>();
-  private final static AtomicInteger generateId = new AtomicInteger(0);
+  
   
   {
     MealUtil.getMeals().forEach(meal -> save(meal, USER_ID));

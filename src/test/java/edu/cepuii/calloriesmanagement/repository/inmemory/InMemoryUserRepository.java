@@ -1,5 +1,10 @@
 package edu.cepuii.calloriesmanagement.repository.inmemory;
 
+import static edu.cepuii.calloriesmanagement.UserTestData.ADMIN;
+import static edu.cepuii.calloriesmanagement.UserTestData.GUEST;
+import static edu.cepuii.calloriesmanagement.UserTestData.GUEST_ID;
+import static edu.cepuii.calloriesmanagement.UserTestData.USER;
+
 import edu.cepuii.calloriesmanagement.model.User;
 import edu.cepuii.calloriesmanagement.repository.UserRepository;
 import java.util.Collection;
@@ -17,8 +22,13 @@ public class InMemoryUserRepository extends InMemoryBaseRepository<User> impleme
   
   private static final Logger log = LoggerFactory.getLogger(InMemoryUserRepository.class);
   
-  static final int USER_ID = 1;
-  static final int ADMIN_ID = 2;
+  public void init() {
+    map.clear();
+    put(USER);
+    put(ADMIN);
+    put(GUEST);
+    counter.getAndSet(GUEST_ID + 1);
+  }
   
   @Override
   public User getByEmail(String email) {
