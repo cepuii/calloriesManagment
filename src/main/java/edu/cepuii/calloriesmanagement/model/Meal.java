@@ -57,7 +57,7 @@ public class Meal extends AbstractBaseEntity {
   }
   
   public boolean isNew() {
-    return id == null;
+    return super.getId() == null;
   }
   
   @Override

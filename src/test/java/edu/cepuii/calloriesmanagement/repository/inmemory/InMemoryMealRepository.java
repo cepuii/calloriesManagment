@@ -5,8 +5,8 @@ import static edu.cepuii.calloriesmanagement.UserTestData.USER_ID;
 
 import edu.cepuii.calloriesmanagement.model.Meal;
 import edu.cepuii.calloriesmanagement.repository.MealRepository;
+import edu.cepuii.calloriesmanagement.util.FilterUtil;
 import edu.cepuii.calloriesmanagement.util.MealUtil;
-import edu.cepuii.calloriesmanagement.util.Util;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.Collection;
@@ -31,7 +31,7 @@ public class InMemoryMealRepository implements MealRepository {
   
   
   {
-    MealUtil.getMeals().forEach(meal -> save(meal, USER_ID));
+    MealUtil.getMealList().forEach(meal -> save(meal, USER_ID));
     save(new Meal(LocalDateTime.of(2015, Month.JUNE, 1, 14, 0), "Админ ланч", 510), ADMIN_ID);
     save(new Meal(LocalDateTime.of(2015, Month.JUNE, 1, 21, 0), "Админ ужин", 1500), ADMIN_ID);
     
@@ -60,7 +60,7 @@ public class InMemoryMealRepository implements MealRepository {
   
   public Collection<Meal> getBetweenHalfOpen(LocalDateTime start, LocalDateTime end, int userId) {
     return filterByPredicate(userId,
-        meal -> Util.isBetweenHalfOpen(meal.getDateTime(), start, end));
+        meal -> FilterUtil.isBetweenHalfOpen(meal.getDateTime(), start, end));
   }
   
   @Override

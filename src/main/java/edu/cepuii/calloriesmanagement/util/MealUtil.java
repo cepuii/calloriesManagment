@@ -16,13 +16,13 @@ import java.util.stream.Collectors;
 /**
  * @author cepuii on 16.07.2022
  */
-public class MealUtil {
+public final class MealUtil {
   
   public static final int DEFAULT_CALORIES_PER_DAY = 2000;
-  private static final List<Meal> meals;
+  private static final List<Meal> MEAL_LIST;
   
   static {
-    meals = Arrays.asList(
+    MEAL_LIST = Arrays.asList(
         new Meal(LocalDateTime.of(2020, Month.JANUARY, 30, 10, 0), "Завтрак", 500),
         new Meal(LocalDateTime.of(2020, Month.JANUARY, 30, 13, 0), "Обед", 1000),
         new Meal(LocalDateTime.of(2020, Month.JANUARY, 30, 20, 0), "Ужин", 500),
@@ -34,8 +34,11 @@ public class MealUtil {
     );
   }
   
-  public static List<Meal> getMeals() {
-    return meals;
+  private MealUtil() {
+  }
+  
+  public static List<Meal> getMealList() {
+    return List.copyOf(MEAL_LIST);
   }
   
   public static Collection<MealTO> getTos(Collection<Meal> meals, int perDays) {
@@ -53,7 +56,7 @@ public class MealUtil {
   public static Collection<MealTO> getFilteredTos(Collection<Meal> mealsDateFiltered,
       int authUserCaloriesPerDay, LocalTime startTime, LocalTime endTime) {
     List<Meal> meals = mealsDateFiltered.stream()
-        .filter(meal -> Util.isBetweenHalfOpen(meal.getTime(), startTime, endTime))
+        .filter(meal -> FilterUtil.isBetweenHalfOpen(meal.getTime(), startTime, endTime))
         .collect(Collectors.toList());
     return getTos(meals, authUserCaloriesPerDay);
   }

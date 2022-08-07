@@ -23,7 +23,8 @@ public class User extends AbstractNamedEntity {
   }
   
   public User(User u) {
-    this(u.id, u.name, u.email, u.password, u.enabled, u.registered, u.roles, u.caloriesPerDay);
+    this(u.getId(), u.getName(), u.email, u.password, u.enabled, u.registered, u.roles,
+        u.caloriesPerDay);
   }
   
   public User(Integer id, String name, String email, String password, Role... roles) {
@@ -95,9 +96,9 @@ public class User extends AbstractNamedEntity {
   @Override
   public String toString() {
     return "User (" +
-        "id=" + id +
+        "id=" + this.getId() +
         ", email=" + email +
-        ", name=" + name +
+        ", name=" + getName() +
         ", enabled=" + enabled +
         ", roles=" + roles +
         ", caloriesPerDay=" + caloriesPerDay +
