@@ -6,7 +6,10 @@ import edu.cepuii.calloriesmanagement.util.exception.NotFoundException;
 /**
  * @author cepuii on 20.07.2022
  */
-public class ValidationUtil {
+public final class ValidationUtil {
+  
+  private ValidationUtil() {
+  }
   
   public static <T> T checkNotFoundWithId(T object, int id) {
     checkNotFoundWithId(object != null, id);

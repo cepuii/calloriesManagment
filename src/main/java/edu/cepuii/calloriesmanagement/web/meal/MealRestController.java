@@ -22,7 +22,7 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class MealRestController {
   
-  private final static Logger log = LoggerFactory.getLogger(MealRestController.class);
+  private static final Logger LOG = LoggerFactory.getLogger(MealRestController.class);
   private final MealService service;
   
   public MealRestController(MealService service) {
@@ -31,40 +31,40 @@ public class MealRestController {
   
   public Meal create(Meal meal) {
     int userId = SecurityUtil.authUserId();
-    log.info("create { }, meal " + meal + " userId " + userId);
+    LOG.info("create { }, meal " + meal + " userId " + userId);
     checkNew(meal);
     return service.save(meal, userId);
   }
   
   public void delete(int id) {
     int userId = SecurityUtil.authUserId();
-    log.info("delete { }, id " + id + " userId " + userId);
+    LOG.info("delete { }, id " + id + " userId " + userId);
     service.delete(id, userId);
   }
   
   public Meal get(int id) {
     int userId = SecurityUtil.authUserId();
-    log.info("get { }, id " + id + " userId " + userId);
+    LOG.info("get { }, id " + id + " userId " + userId);
     return service.getById(id, userId);
   }
   
   public void update(Meal meal, int id) {
     int userId = SecurityUtil.authUserId();
-    log.info("update { }, meal " + meal + " userId " + userId);
+    LOG.info("update { }, meal " + meal + " userId " + userId);
     assureIdConsistent(meal, id);
     service.save(meal, userId);
   }
   
   public Collection<MealTO> getAll() {
     int userId = SecurityUtil.authUserId();
-    log.info("get all { } " + userId);
+    LOG.info("get all { } " + userId);
     return MealUtil.getTos(service.getAll(userId), SecurityUtil.authUserCaloriesPerDay());
   }
   
   public Collection<MealTO> getBetween(@Nullable LocalDate startDate, @Nullable LocalTime startTime,
       @Nullable LocalDate endDate, @Nullable LocalTime endTime) {
     int userId = SecurityUtil.authUserId();
-    log.info("getBetween dates({} - {}) time({} - {}) for user {}", startDate, endDate, startTime,
+    LOG.info("getBetween dates({} - {}) time({} - {}) for user {}", startDate, endDate, startTime,
         endTime, userId);
     
     Collection<Meal> mealsDateFiltered = service.getBetweenInclusive(startDate, endDate, userId);

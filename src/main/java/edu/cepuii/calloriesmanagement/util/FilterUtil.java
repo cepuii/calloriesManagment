@@ -2,7 +2,10 @@ package edu.cepuii.calloriesmanagement.util;
 
 import org.springframework.lang.Nullable;
 
-public class Util {
+public final class FilterUtil {
+  
+  private FilterUtil() {
+  }
   
   public static <T extends Comparable<T>> boolean isBetweenHalfOpen(T value,
       @Nullable T start, @Nullable T end) {
