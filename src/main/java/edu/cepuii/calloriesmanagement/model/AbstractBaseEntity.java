@@ -11,7 +11,7 @@ public abstract class AbstractBaseEntity {
   
   protected Integer id;
   
-  public AbstractBaseEntity() {
+  protected AbstractBaseEntity() {
   }
   
   public AbstractBaseEntity(Integer id) {

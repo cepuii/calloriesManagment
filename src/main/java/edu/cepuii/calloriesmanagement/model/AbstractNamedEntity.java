@@ -5,12 +5,12 @@ package edu.cepuii.calloriesmanagement.model;
  */
 public class AbstractNamedEntity extends AbstractBaseEntity {
   
-  public AbstractNamedEntity() {
+  protected AbstractNamedEntity() {
   }
   
   protected String name;
   
-  public AbstractNamedEntity(Integer id, String name) {
+  protected AbstractNamedEntity(Integer id, String name) {
     super(id);
     this.name = name;
   }
