@@ -8,7 +8,7 @@ public class AbstractNamedEntity extends AbstractBaseEntity {
   protected AbstractNamedEntity() {
   }
   
-  protected String name;
+  private String name;
   
   protected AbstractNamedEntity(Integer id, String name) {
     super(id);

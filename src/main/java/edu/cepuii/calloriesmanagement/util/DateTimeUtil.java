@@ -6,10 +6,13 @@ import java.time.LocalTime;
 import org.springframework.lang.Nullable;
 import org.springframework.util.StringUtils;
 
-public class DateTimeUtil {
+public final class DateTimeUtil {
   
   private static final LocalDateTime MIN_DATE = LocalDateTime.of(1, 1, 1, 0, 0);
   private static final LocalDateTime MAX_DATE = LocalDateTime.of(3001, 1, 1, 0, 0);
+  
+  private DateTimeUtil() {
+  }
   
   public static LocalDateTime atStartOfDayOrMin(LocalDate startDate) {
     return startDate != null ? startDate.atStartOfDay() : MIN_DATE;

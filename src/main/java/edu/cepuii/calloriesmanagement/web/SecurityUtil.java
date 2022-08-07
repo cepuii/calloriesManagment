@@ -6,9 +6,12 @@ import edu.cepuii.calloriesmanagement.util.MealUtil;
 /**
  * @author cepuii on 19.07.2022
  */
-public class SecurityUtil {
+public final class SecurityUtil {
   
   private static int userId = AbstractBaseEntity.START_SEQ;
+  
+  private SecurityUtil() {
+  }
   
   public static int authUserId() {
     return userId;

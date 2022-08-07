@@ -24,11 +24,11 @@ import org.springframework.util.StringUtils;
 @WebServlet(name = "meals", urlPatterns = "/mealsServlet")
 public class MealServlet extends HttpServlet {
   
-  ConfigurableApplicationContext context;
-  MealRestController mealController;
+  private ConfigurableApplicationContext context;
+  private MealRestController mealController;
   
   @Override
-  public void init() throws ServletException {
+  public void init() {
     context = new ClassPathXmlApplicationContext(
         "spring/spring-app.xml", "spring/spring-db.xml");
     mealController = context.getBean(MealRestController.class);
