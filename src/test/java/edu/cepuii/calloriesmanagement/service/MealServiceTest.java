@@ -3,7 +3,6 @@ package edu.cepuii.calloriesmanagement.service;
 import static edu.cepuii.calloriesmanagement.MealTestData.FIND_MEAL;
 import static edu.cepuii.calloriesmanagement.MealTestData.MEAL;
 import static edu.cepuii.calloriesmanagement.MealTestData.NOT_FOUND_FIND_MEAL;
-import static edu.cepuii.calloriesmanagement.MealTestData.assertMatch;
 import static edu.cepuii.calloriesmanagement.MealTestData.getNew;
 import static edu.cepuii.calloriesmanagement.MealTestData.getUpdated;
 import static edu.cepuii.calloriesmanagement.MealTestData.getUserMeals;
@@ -14,6 +13,8 @@ import static edu.cepuii.calloriesmanagement.UserTestData.USER_ID;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
+import edu.cepuii.calloriesmanagement.MatcherFactory;
+import edu.cepuii.calloriesmanagement.MatcherFactory.Matcher;
 import edu.cepuii.calloriesmanagement.model.Meal;
 import edu.cepuii.calloriesmanagement.util.exception.NotFoundException;
 import java.time.LocalDate;
@@ -21,7 +22,6 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ContextConfiguration;
@@ -34,17 +34,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 public class MealServiceTest {
   
-  static {
-    SLF4JBridgeHandler.install();
-  }
-  
+  private static final Matcher<Meal> MEAL_MATCHER = MatcherFactory.usingIgnoringFieldsComparator();
   @Autowired
   private MealService service;
   
   @Test
   public void save() {
     service.save(getUpdated(), USER_ID);
-    assertMatch(service.getById(FIND_MEAL, USER_ID), getUpdated());
+    MEAL_MATCHER.assertMatch(service.getById(FIND_MEAL, USER_ID), getUpdated());
   }
   
   @Test
@@ -53,8 +50,8 @@ public class MealServiceTest {
     Integer newId = created.getId();
     Meal newMeal = getNew();
     newMeal.setId(newId);
-    assertMatch(service.getById(newId, USER_ID), newMeal);
-    assertMatch(created, newMeal);
+    MEAL_MATCHER.assertMatch(service.getById(newId, USER_ID), newMeal);
+    MEAL_MATCHER.assertMatch(created, newMeal);
   }
   
   @Test
@@ -78,7 +75,7 @@ public class MealServiceTest {
   @Test
   public void getAll() {
     Collection<Meal> meals = service.getAll(USER_ID);
-    assertMatch(meals, getUserMeals());
+    MEAL_MATCHER.assertMatch(meals, getUserMeals());
   }
   
   @Test
@@ -103,12 +100,12 @@ public class MealServiceTest {
     LocalDate endDate = LocalDate.of(2020, 12, 20);
     Collection<Meal> meals = service.getBetweenInclusive(startDate,
         endDate, USER_ID);
-    assertMatch(meals, getUserMealsWithFilter(startDate, endDate));
+    MEAL_MATCHER.assertMatch(meals, getUserMealsWithFilter(startDate, endDate));
   }
   
   
   @Test
   public void getBetweenInclusiveWithNulls() {
-    assertMatch(service.getBetweenInclusive(null, null, USER_ID), getUserMeals());
+    MEAL_MATCHER.assertMatch(service.getBetweenInclusive(null, null, USER_ID), getUserMeals());
   }
 }

@@ -1,11 +1,9 @@
 package edu.cepuii.calloriesmanagement;
 
 import static edu.cepuii.calloriesmanagement.model.AbstractBaseEntity.START_SEQ;
-import static org.assertj.core.api.Assertions.assertThat;
 
 import edu.cepuii.calloriesmanagement.model.Role;
 import edu.cepuii.calloriesmanagement.model.User;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 
@@ -40,17 +38,4 @@ public class UserTestData {
     return updated;
   }
   
-  public static void assertMatch(User actual, User expected) {
-    assertThat(actual).usingRecursiveComparison().ignoringFields("registered", "roles")
-        .isEqualTo(expected);
-  }
-  
-  public static void assertMatch(Iterable<User> actual, User... expected) {
-    assertMatch(actual, Arrays.asList(expected));
-  }
-  
-  public static void assertMatch(Iterable<User> actual, Iterable<User> expected) {
-    assertThat(actual).usingRecursiveFieldByFieldElementComparatorIgnoringFields("registered",
-        "roles").isEqualTo(expected);
-  }
 }

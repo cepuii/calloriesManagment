@@ -5,16 +5,16 @@ import static edu.cepuii.calloriesmanagement.UserTestData.GUEST;
 import static edu.cepuii.calloriesmanagement.UserTestData.NOT_FOUND;
 import static edu.cepuii.calloriesmanagement.UserTestData.USER;
 import static edu.cepuii.calloriesmanagement.UserTestData.USER_ID;
-import static edu.cepuii.calloriesmanagement.UserTestData.assertMatch;
 import static edu.cepuii.calloriesmanagement.UserTestData.getNew;
 import static org.junit.Assert.assertThrows;
 
+import edu.cepuii.calloriesmanagement.MatcherFactory;
+import edu.cepuii.calloriesmanagement.MatcherFactory.Matcher;
 import edu.cepuii.calloriesmanagement.model.Role;
 import edu.cepuii.calloriesmanagement.model.User;
 import java.util.Collection;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -28,10 +28,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 public class UserServiceTest {
   
-  static {
-    SLF4JBridgeHandler.install();
-  }
-  
+  private final static Matcher<User> USER_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(
+      "registered", "roles");
   @Autowired
   private UserService service;
   
@@ -41,8 +39,8 @@ public class UserServiceTest {
     Integer id = created.getId();
     User newUser = getNew();
     newUser.setId(id);
-    assertMatch(created, newUser);
-    assertMatch(service.get(id), newUser);
+    USER_MATCHER.assertMatch(created, newUser);
+    USER_MATCHER.assertMatch(service.get(id), newUser);
   }
   
   @Test
@@ -60,7 +58,7 @@ public class UserServiceTest {
   @Test
   public void get() {
     User user = service.get(USER_ID);
-    assertMatch(user, USER);
+    USER_MATCHER.assertMatch(user, USER);
   }
   
   @Test
@@ -71,12 +69,12 @@ public class UserServiceTest {
   @Test
   public void getByEmail() {
     User user = service.getByEmail("admin@gmail.com");
-    assertMatch(user, ADMIN);
+    USER_MATCHER.assertMatch(user, ADMIN);
   }
   
   @Test
   public void getAll() {
     Collection<User> users = service.getAll();
-    assertMatch(users, ADMIN, GUEST, USER);
+    USER_MATCHER.assertMatch(users, ADMIN, GUEST, USER);
   }
 }
