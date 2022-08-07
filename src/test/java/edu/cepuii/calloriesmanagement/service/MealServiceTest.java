@@ -105,4 +105,10 @@ public class MealServiceTest {
         endDate, USER_ID);
     assertMatch(meals, getUserMealsWithFilter(startDate, endDate));
   }
+  
+  
+  @Test
+  public void getBetweenInclusiveWithNulls() {
+    assertMatch(service.getBetweenInclusive(null, null, USER_ID), getUserMeals());
+  }
 }
