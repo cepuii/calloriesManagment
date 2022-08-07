@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <configuration scan="true" scanPeriod="30 seconds">
 
-  <jmxConfigurator/>
-
   <appender name="file" class="ch.qos.logback.core.FileAppender">
-    <file>app.log</file>
-
+    <file>"app.log"</file>
     <encoder>
       <charset>UTF-8</charset>
       <pattern>%date %-5level %logger{50}.%M:%L - %msg%n</pattern>
