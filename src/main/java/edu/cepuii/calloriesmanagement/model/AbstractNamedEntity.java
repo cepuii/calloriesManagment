@@ -1,10 +1,19 @@
 package edu.cepuii.calloriesmanagement.model;
 
+import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 /**
  * @author cepuii on 19.07.2022
  */
+@MappedSuperclass
 public class AbstractNamedEntity extends AbstractBaseEntity {
   
+  @NotBlank
+  @Size(min = 2, max = 128)
+  @Column(name = "name", nullable = false)
   private String name;
   
   protected AbstractNamedEntity() {
