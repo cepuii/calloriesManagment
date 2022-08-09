@@ -12,12 +12,12 @@ import edu.cepuii.calloriesmanagement.MatcherFactory;
 import edu.cepuii.calloriesmanagement.MatcherFactory.Matcher;
 import edu.cepuii.calloriesmanagement.model.Role;
 import edu.cepuii.calloriesmanagement.model.User;
+import edu.cepuii.calloriesmanagement.util.exception.NotFoundException;
 import java.util.Collection;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
@@ -52,7 +52,7 @@ public class UserServiceTest {
   @Test
   public void delete() {
     service.delete(USER_ID);
-    assertThrows(EmptyResultDataAccessException.class, () -> service.get(USER_ID));
+    assertThrows(NotFoundException.class, () -> service.get(USER_ID));
   }
   
   @Test
@@ -63,7 +63,7 @@ public class UserServiceTest {
   
   @Test
   public void getNotFound() {
-    assertThrows(EmptyResultDataAccessException.class, () -> service.get(NOT_FOUND));
+    assertThrows(NotFoundException.class, () -> service.get(NOT_FOUND));
   }
   
   @Test
