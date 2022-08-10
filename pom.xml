@@ -26,6 +26,7 @@
     <hibernate-core.version>5.6.1.Final</hibernate-core.version>
     <hibernate-validator.version>6.2.0.Final</hibernate-validator.version>
     <javax.el.version>3.0.1-b12</javax.el.version>
+    <hsqldb.version>2.6.1</hsqldb.version>
   </properties>
 
   <dependencies>
@@ -74,6 +75,11 @@
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
       <version>${postgresql.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.hsqldb</groupId>
+      <artifactId>hsqldb</artifactId>
+      <version>${hsqldb.version}</version>
     </dependency>
     <!-- Test -->
     <dependency>
