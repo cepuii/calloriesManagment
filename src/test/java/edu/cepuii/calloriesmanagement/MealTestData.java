@@ -54,14 +54,14 @@ public class MealTestData {
   
   public static Meal getUpdated() {
     Meal updated = MEAL;
-    updated.setCalories(801);
+    updated.setCalories(400);
     updated.setDescription("Updated");
     updated.setDateTime(LocalDateTime.of(1010, 1, 5, 1, 1, 1));
     return updated;
   }
   
   public static Meal getNew() {
-    return new Meal(null, LocalDateTime.of(2000, 1, 1, 1, 1, 1), "new ", 777);
+    return new Meal(null, LocalDateTime.of(2000, 1, 1, 1, 1, 1), "new ", 499);
   }
   
 }
