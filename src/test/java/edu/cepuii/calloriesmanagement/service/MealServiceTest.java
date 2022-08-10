@@ -34,7 +34,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 public class MealServiceTest {
   
-  private static final Matcher<Meal> MEAL_MATCHER = MatcherFactory.usingIgnoringFieldsComparator();
+  private static final Matcher<Meal> MEAL_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(
+      "user");
   @Autowired
   private MealService service;
   
@@ -64,7 +65,7 @@ public class MealServiceTest {
   @Test
   public void delete() {
     service.delete(FIND_MEAL, USER_ID);
-    assertThrows(DataAccessException.class, () -> service.getById(FIND_MEAL, USER_ID));
+    assertThrows(NotFoundException.class, () -> service.getById(FIND_MEAL, USER_ID));
   }
   
   @Test
@@ -86,12 +87,12 @@ public class MealServiceTest {
   
   @Test
   public void getByIdNotFound() {
-    assertThrows(DataAccessException.class, () -> service.getById(NOT_FOUND_FIND_MEAL, USER_ID));
+    assertThrows(NotFoundException.class, () -> service.getById(NOT_FOUND_FIND_MEAL, USER_ID));
   }
   
   @Test
   public void getByIdNotFoundByUserId() {
-    assertThrows(DataAccessException.class, () -> service.getById(FIND_MEAL, NOT_FOUND));
+    assertThrows(NotFoundException.class, () -> service.getById(FIND_MEAL, NOT_FOUND));
   }
   
   @Test
