@@ -5,10 +5,8 @@ import edu.cepuii.calloriesmanagement.model.User;
 import edu.cepuii.calloriesmanagement.repository.MealRepository;
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,14 +20,14 @@ public class JpaMealRepository implements MealRepository {
   @Transactional
   @Override
   public Meal save(Meal meal, int userId) {
-    User ref = em.getReference(User.class, userId);
-    meal.setUser(ref);
+    meal.setUser(em.getReference(User.class, userId));
     if (meal.isNew()) {
       em.persist(meal);
       return meal;
-    } else {
-      return em.merge(meal);
+    } else if (get(meal.getId(), userId) == null) {
+      return null;
     }
+    return em.merge(meal);
   }
   
   @Transactional
@@ -43,11 +41,8 @@ public class JpaMealRepository implements MealRepository {
   
   @Override
   public Meal get(int id, int userId) {
-    List<Meal> resultList = em.createNamedQuery(Meal.GET, Meal.class)
-        .setParameter("id", id)
-        .setParameter("userId", userId)
-        .getResultList();
-    return DataAccessUtils.singleResult(resultList);
+    Meal meal = em.find(Meal.class, id);
+    return (meal != null && meal.getUser().getId() == userId) ? meal : null;
   }
   
   @Override
