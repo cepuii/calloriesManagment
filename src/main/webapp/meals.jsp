@@ -44,7 +44,7 @@
         <th>Excess</th>
     </tr>
     <c:forEach items="${requestScope.meals}" var="meal">
-        <jsp:useBean id="meal" type="edu.cepuii.calloriesmanagement.to.MealTO"/>
+        <jsp:useBean id="meal" type="edu.cepuii.caloriesmanagment.to.MealTO"/>
         <tr data-meal-excess="${meal.excess}">
             <td><fmt:parseDate value="${meal.dateTime}" pattern="yyyy-MM-dd'T'HH:mm"
                                var="parsedDateTime" type="both"/>
