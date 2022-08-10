@@ -57,7 +57,7 @@ public final class MealUtil {
       int authUserCaloriesPerDay, LocalTime startTime, LocalTime endTime) {
     List<Meal> meals = mealsDateFiltered.stream()
         .filter(meal -> FilterUtil.isBetweenHalfOpen(meal.getTime(), startTime, endTime))
-        .collect(Collectors.toList());
+        .toList();
     return getTos(meals, authUserCaloriesPerDay);
   }
   

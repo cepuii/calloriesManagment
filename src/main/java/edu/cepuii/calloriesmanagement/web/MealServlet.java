@@ -46,22 +46,19 @@ public class MealServlet extends HttpServlet {
     req.setCharacterEncoding("UTF-8");
     String action = req.getParameter("action");
     switch (action == null ? "all" : action) {
-      case "delete":
+      case "delete" -> {
         int id = Integer.parseInt(req.getParameter("id"));
         mealController.delete(id);
         resp.sendRedirect("mealsServlet");
-        break;
-      
-      case "add":
-      case "update":
+      }
+      case "update", "add" -> {
         final Meal meal = "add".equals(action) ?
             new Meal(LocalDateTime.now(), "", 500) :
             mealController.get(getId(req));
         req.setAttribute("meal", meal);
         req.getRequestDispatcher("/addMeal.jsp").forward(req, resp);
-        break;
-      
-      case "filter":
+      }
+      case "filter" -> {
         LocalDate startDate = DateTimeUtil.parseLocalDate(req.getParameter("startDate"));
         LocalDate endDate = DateTimeUtil.parseLocalDate(req.getParameter("endDate"));
         LocalTime startTime = DateTimeUtil.parseLocalTime(req.getParameter("startTime"));
@@ -70,12 +67,11 @@ public class MealServlet extends HttpServlet {
             endTime);
         req.setAttribute("meals", between);
         req.getRequestDispatcher("/meals.jsp").forward(req, resp);
-        break;
-      
-      case "all":
-      default:
+      }
+      default -> {
         req.setAttribute("meals", mealController.getAll());
         req.getRequestDispatcher("/meals.jsp").forward(req, resp);
+      }
     }
   }
   
