@@ -1,11 +1,13 @@
 package edu.cepuii.caloriesmanagment.service;
 
+import static edu.cepuii.caloriesmanagment.Profiles.ACTIVE_DB;
 import static edu.cepuii.caloriesmanagment.UserTestData.ADMIN;
 import static edu.cepuii.caloriesmanagment.UserTestData.GUEST;
 import static edu.cepuii.caloriesmanagment.UserTestData.NOT_FOUND;
 import static edu.cepuii.caloriesmanagment.UserTestData.USER;
 import static edu.cepuii.caloriesmanagment.UserTestData.USER_ID;
 import static edu.cepuii.caloriesmanagment.UserTestData.getNew;
+import static edu.cepuii.caloriesmanagment.UserTestData.getUpdated;
 import static org.junit.Assert.assertThrows;
 
 import edu.cepuii.caloriesmanagment.MatcherFactory;
@@ -18,6 +20,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
@@ -26,6 +29,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @ContextConfiguration({"classpath:spring/spring-app.xml", "classpath:spring/spring-db.xml"})
 @RunWith(SpringRunner.class)
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
+@ActiveProfiles(ACTIVE_DB)
 public class UserServiceTest {
   
   private final static Matcher<User> USER_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(
@@ -76,5 +80,12 @@ public class UserServiceTest {
   public void getAll() {
     Collection<User> users = service.getAll();
     USER_MATCHER.assertMatch(users, ADMIN, GUEST, USER);
+  }
+  
+  @Test
+  public void update() {
+    User updated = getUpdated();
+    service.save(updated);
+    USER_MATCHER.assertMatch(service.get(USER_ID), getUpdated());
   }
 }
