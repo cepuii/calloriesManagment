@@ -1,5 +1,7 @@
 package edu.cepuii.caloriesmanagment;
 
+import org.springframework.util.ClassUtils;
+
 public class Profiles {
   
   public static final String JDBC = "jdbc";
@@ -13,5 +15,15 @@ public class Profiles {
   public static final String ACTIVE_DB = POSTGRES;
   
   private Profiles() {
+  }
+  
+  public static String getActiveDbProfile() {
+    if (ClassUtils.isPresent("org.postgresql.Driver", null)) {
+      return POSTGRES;
+    } else if (ClassUtils.isPresent("org.hsqldb.jdbcDriver", null)) {
+      return HSQL;
+    } else {
+      throw new IllegalStateException("Could not find DB driver");
+    }
   }
 }

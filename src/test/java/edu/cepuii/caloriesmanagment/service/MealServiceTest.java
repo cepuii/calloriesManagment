@@ -7,7 +7,6 @@ import static edu.cepuii.caloriesmanagment.MealTestData.getNew;
 import static edu.cepuii.caloriesmanagment.MealTestData.getUpdated;
 import static edu.cepuii.caloriesmanagment.MealTestData.getUserMeals;
 import static edu.cepuii.caloriesmanagment.MealTestData.getUserMealsWithFilter;
-import static edu.cepuii.caloriesmanagment.Profiles.ACTIVE_DB;
 import static edu.cepuii.caloriesmanagment.UserTestData.ADMIN_ID;
 import static edu.cepuii.caloriesmanagment.UserTestData.NOT_FOUND;
 import static edu.cepuii.caloriesmanagment.UserTestData.USER_ID;
@@ -15,6 +14,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 import static org.slf4j.LoggerFactory.getLogger;
 
+import edu.cepuii.caloriesmanagment.ActiveDbProfileResolver;
 import edu.cepuii.caloriesmanagment.MatcherFactory;
 import edu.cepuii.caloriesmanagment.MatcherFactory.Matcher;
 import edu.cepuii.caloriesmanagment.model.Meal;
@@ -41,7 +41,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @ContextConfiguration({"classpath:spring/spring-app.xml", "classpath:spring/spring-db.xml"})
 @RunWith(SpringRunner.class)
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
-@ActiveProfiles(ACTIVE_DB)
+@ActiveProfiles(resolver = ActiveDbProfileResolver.class)
 public class MealServiceTest {
   
   private static final Matcher<Meal> MEAL_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(
