@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="30 seconds">
 
+  <logger name="edu.cepuii.caloriesmanagment" level="debug"/>
+
   <appender name="file" class="ch.qos.logback.core.FileAppender">
     <file>"app.log"</file>
     <encoder>
@@ -16,7 +18,6 @@
     </encoder>
   </appender>
 
-  <logger name="edu.cepuii.caloriesmanagment" level="debug"/>
 
   <root level="info">
     <appender-ref ref="file"/>
