@@ -6,8 +6,9 @@ public class Profiles {
   
   public static final String JDBC = "jdbc";
   public static final String JPA = "jpa";
+  public static final String DATAJPA = "dataJpa";
   
-  public static final String REPOSITORY_IMPLEMENTATION = JPA;
+  public static final String REPOSITORY_IMPLEMENTATION = DATAJPA;
   
   public static final String POSTGRES = "postgres";
   public static final String HSQL = "hsqldb";
