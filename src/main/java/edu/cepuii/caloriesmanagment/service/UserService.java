@@ -7,6 +7,8 @@ import edu.cepuii.caloriesmanagment.model.User;
 import edu.cepuii.caloriesmanagment.repository.UserRepository;
 import edu.cepuii.caloriesmanagment.util.exception.NotFoundException;
 import java.util.Collection;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -20,7 +22,7 @@ public class UserService {
     this.repository = repository;
   }
   
-  
+  @CacheEvict(value = "users", allEntries = true)
   public User save(User user) {
     User newUser = repository.save(user);
     if (newUser == null) {
@@ -29,6 +31,7 @@ public class UserService {
     return newUser;
   }
   
+  @CacheEvict(value = "users", allEntries = true)
   public boolean delete(int id) {
     if (!repository.delete(id)) {
       throw new NotFoundException("Not found user, id" + id);
@@ -44,6 +47,7 @@ public class UserService {
     return checkNotFound(repository.getByEmail(email), email);
   }
   
+  @Cacheable("users")
   public Collection<User> getAll() {
     return repository.getAll();
   }
