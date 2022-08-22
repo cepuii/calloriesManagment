@@ -6,53 +6,20 @@
   xmlns:p="http://www.springframework.org/schema/p"
   xmlns:tx="http://www.springframework.org/schema/tx"
   xmlns:jpa="http://www.springframework.org/schema/data/jpa"
-  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
-
-  <!--  <context:component-scan base-package="edu.cepuii.**.repository.jpa"/>-->
-  <context:component-scan base-package="edu.cepuii.**.repository.dataJpa"/>
-  <jpa:repositories base-package="edu.cepuii.**.repository.dataJpa"/>
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+  http://www.springframework.org/schema/context   https://www.springframework.org/schema/context/spring-context.xsd
+  http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+  http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+  http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
   <jdbc:initialize-database>
     <jdbc:script location="${jdbc.initLocation}"/>
     <jdbc:script encoding="UTF-8" location="classpath:db/populateDB.sql"/>
   </jdbc:initialize-database>
 
-  <!--  <bean id="jdbcTemplate"-->
-  <!--    class="org.springframework.jdbc.core.JdbcTemplate">-->
-  <!--    <constructor-arg ref="dataSource"/>-->
-  <!--  </bean>-->
-  <!--  <bean id="namedJdbcTemplate"-->
-  <!--    class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">-->
-  <!--    <constructor-arg ref="jdbcTemplate"/>-->
-  <!--  </bean>-->
-
-
-  <bean id="entityManagerFactory"
-    class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
-    p:dataSource-ref="dataSource"
-    p:packagesToScan="edu.cepuii.**.model">
-
-    <property name="jpaPropertyMap">
-      <map>
-        <entry key="#{T(org.hibernate.cfg.AvailableSettings).FORMAT_SQL}"
-          value="${hibernate.format_sql}"/>
-        <entry key="#{T(org.hibernate.cfg.AvailableSettings).USE_SQL_COMMENTS}"
-          value="${hibernate.use_sql_comments}"/>
-      </map>
-    </property>
-    <property name="jpaVendorAdapter">
-      <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"
-        p:showSql="${jpa.showSql}"/>
-    </property>
-  </bean>
-
-  <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
-    p:entityManagerFactory-ref="entityManagerFactory"/>
-  <tx:annotation-driven/>
   <beans profile="hsqldb">
     <context:property-placeholder location="classpath:db/hsqldb.properties"
       system-properties-mode="OVERRIDE"/>
-
     <bean id="dataSource"
       class="org.springframework.jdbc.datasource.DriverManagerDataSource">
       <property name="driverClassName" value="org.postgresql.Driver"/>
@@ -65,7 +32,6 @@
   <beans profile="postgres">
     <context:property-placeholder location="classpath:db/postgres.properties"
       system-properties-mode="OVERRIDE"/>
-
     <bean id="dataSource"
       class="org.apache.tomcat.jdbc.pool.DataSource">
       <property name="driverClassName" value="org.postgresql.Driver"/>
@@ -73,19 +39,52 @@
       <property name="username" value="${database.username}"/>
       <property name="password" value="${database.password}"/>
     </bean>
-
     <bean class="org.springframework.beans.factory.config.MethodInvokingBean">
       <property name="staticMethod" value="org.slf4j.bridge.SLF4JBridgeHandler.install"/>
     </bean>
-
   </beans>
+
   <beans profile="jdbc">
-
+    <context:component-scan base-package="edu.cepuii.**.repository.jdbc"/>
+    <bean id="jdbcTemplate"
+      class="org.springframework.jdbc.core.JdbcTemplate">
+      <constructor-arg ref="dataSource"/>
+    </bean>
+    <bean id="namedJdbcTemplate"
+      class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+      <constructor-arg ref="jdbcTemplate"/>
+    </bean>
   </beans>
+
+  <beans profile="dataJpa, jpa">
+    <bean id="entityManagerFactory"
+      class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
+      p:dataSource-ref="dataSource"
+      p:packagesToScan="edu.cepuii.**.model">
+      <property name="jpaPropertyMap">
+        <map>
+          <entry key="#{T(org.hibernate.cfg.AvailableSettings).FORMAT_SQL}"
+            value="${hibernate.format_sql}"/>
+          <entry key="#{T(org.hibernate.cfg.AvailableSettings).USE_SQL_COMMENTS}"
+            value="${hibernate.use_sql_comments}"/>
+        </map>
+      </property>
+      <property name="jpaVendorAdapter">
+        <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"
+          p:showSql="${jpa.showSql}"/>
+      </property>
+    </bean>
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
+      p:entityManagerFactory-ref="entityManagerFactory"/>
+    <tx:annotation-driven/>
+  </beans>
+
   <beans profile="jpa">
-
+    <context:component-scan base-package="edu.cepuii.**.repository.jpa"/>
   </beans>
-  <beans profile="dataJpa">
 
+  <beans profile="dataJpa">
+    <context:component-scan base-package="edu.cepuii.**.repository.dataJpa"/>
+    <jpa:repositories base-package="edu.cepuii.**.repository.dataJpa"/>
   </beans>
 </beans>
