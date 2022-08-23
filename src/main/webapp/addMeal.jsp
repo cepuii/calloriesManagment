@@ -19,7 +19,7 @@
     <hr>
     <h2>${param.action == 'create' ? 'Create meal' : 'Edit meal'}</h2>
     <form method="post" action="mealsServlet">
-        <jsp:useBean id="meal" scope="request" class="edu.cepuii.calloriesmanagement.model.Meal"/>
+        <jsp:useBean id="meal" scope="request" class="edu.cepuii.caloriesmanagment.model.Meal"/>
         <input type="hidden" name="id" value="${meal.id}">
         <dl>
             <dt>DateTime:</dt>
