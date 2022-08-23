@@ -12,9 +12,7 @@ import static edu.cepuii.caloriesmanagment.UserTestData.NOT_FOUND;
 import static edu.cepuii.caloriesmanagment.UserTestData.USER_ID;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
-import static org.slf4j.LoggerFactory.getLogger;
 
-import edu.cepuii.caloriesmanagment.ActiveDbProfileResolver;
 import edu.cepuii.caloriesmanagment.MatcherFactory;
 import edu.cepuii.caloriesmanagment.MatcherFactory.Matcher;
 import edu.cepuii.caloriesmanagment.model.Meal;
@@ -22,55 +20,17 @@ import edu.cepuii.caloriesmanagment.util.exception.NotFoundException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.concurrent.TimeUnit;
-import org.junit.AfterClass;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.Stopwatch;
-import org.junit.runner.Description;
-import org.junit.runner.RunWith;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlConfig;
-import org.springframework.test.context.junit4.SpringRunner;
 
-@ContextConfiguration({"classpath:spring/spring-app.xml", "classpath:spring/spring-db.xml"})
-@RunWith(SpringRunner.class)
-@Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
-@ActiveProfiles(resolver = ActiveDbProfileResolver.class)
-public class MealServiceTest {
+public abstract class AbstractMealServiceTest extends AbstractServiceTest {
   
   private static final Matcher<Meal> MEAL_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(
       "user");
   
-  private static final Logger log = getLogger("result");
-  
-  private static final StringBuilder results = new StringBuilder();
-  
-  @Rule
-  public final Stopwatch stopwatch = new Stopwatch() {
-    @Override
-    protected void finished(long nanos, Description description) {
-      String result = String.format("\n%-25s %7d", description.getMethodName(),
-          TimeUnit.NANOSECONDS.toMillis(nanos));
-      results.append(result);
-      log.info(result + " ms\n");
-    }
-  };
   @Autowired
   private MealService service;
-  
-  @AfterClass
-  public static void printResult() {
-    log.info("""
-        ----------------------
-        Test          Duration, ms
-        """ + results + "\n----------------------");
-  }
   
   @Test
   public void save() {
