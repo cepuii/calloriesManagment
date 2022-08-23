@@ -2,7 +2,7 @@ package edu.cepuii.caloriesmanagment.service;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
-import edu.cepuii.caloriesmanagment.ActiveDbProfileResolver;
+import edu.cepuii.caloriesmanagment.Profiles;
 import java.util.concurrent.TimeUnit;
 import org.junit.AfterClass;
 import org.junit.Rule;
@@ -19,7 +19,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @ContextConfiguration({"classpath:spring/spring-app.xml", "classpath:spring/spring-db.xml"})
 @RunWith(SpringRunner.class)
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
-@ActiveProfiles(resolver = ActiveDbProfileResolver.class)
+@ActiveProfiles(Profiles.POSTGRES)
 public abstract class AbstractServiceTest {
   
   private static final Logger log = getLogger("result");
