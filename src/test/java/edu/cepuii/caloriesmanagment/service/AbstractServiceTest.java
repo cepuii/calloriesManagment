@@ -1,5 +1,8 @@
 package edu.cepuii.caloriesmanagment.service;
 
+import static edu.cepuii.caloriesmanagment.util.ValidationUtil.getRootCause;
+import static org.junit.Assert.assertThrows;
+
 import edu.cepuii.caloriesmanagment.Profiles;
 import edu.cepuii.caloriesmanagment.TimingRules;
 import org.junit.ClassRule;
@@ -24,4 +27,16 @@ public abstract class AbstractServiceTest {
   
   @Rule
   public Stopwatch stopwatch = TimingRules.STOPWATCH;
+  
+  //  Check root cause in JUnit: https://github.com/junit-team/junit4/pull/778
+  protected <T extends Throwable> void validateRootCause(Class<T> rootExceptionClass,
+      Runnable runnable) {
+    assertThrows(rootExceptionClass, () -> {
+      try {
+        runnable.run();
+      } catch (Exception e) {
+        throw getRootCause(e);
+      }
+    });
+  }
 }

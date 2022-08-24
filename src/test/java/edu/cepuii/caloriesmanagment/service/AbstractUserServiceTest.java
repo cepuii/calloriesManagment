@@ -15,6 +15,7 @@ import edu.cepuii.caloriesmanagment.model.Role;
 import edu.cepuii.caloriesmanagment.model.User;
 import edu.cepuii.caloriesmanagment.util.exception.NotFoundException;
 import java.util.Collection;
+import org.hibernate.exception.ConstraintViolationException;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,4 +88,14 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
     USER_MATCHER.assertMatch(service.get(USER_ID), getUpdated());
   }
   
+  @Test
+  public void createWithException() throws Exception {
+    validateRootCause(ConstraintViolationException.class,
+        () -> service.save(new User(null, "  ", "mail@yandex.ru", "password", Role.USER)));
+    validateRootCause(ConstraintViolationException.class,
+        () -> service.save(new User(null, "User", "  ", "password", Role.USER)));
+    validateRootCause(ConstraintViolationException.class,
+        () -> service.save(new User(null, "User", "mail@yandex.ru", "  ", Role.USER)));
+  }
 }
+
