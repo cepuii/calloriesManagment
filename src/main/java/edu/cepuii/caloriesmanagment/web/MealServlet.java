@@ -1,5 +1,6 @@
 package edu.cepuii.caloriesmanagment.web;
 
+import edu.cepuii.caloriesmanagment.Profiles;
 import edu.cepuii.caloriesmanagment.model.Meal;
 import edu.cepuii.caloriesmanagment.to.MealTO;
 import edu.cepuii.caloriesmanagment.util.DateTimeUtil;
@@ -14,7 +15,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.util.StringUtils;
 
@@ -24,13 +24,16 @@ import org.springframework.util.StringUtils;
 @WebServlet(name = "meals", urlPatterns = "/mealsServlet")
 public class MealServlet extends HttpServlet {
   
-  private ConfigurableApplicationContext context;
+  private ClassPathXmlApplicationContext context;
   private MealRestController mealController;
   
   @Override
   public void init() {
     context = new ClassPathXmlApplicationContext(
-        "spring/spring-app.xml", "spring/spring-db.xml");
+        new String[]{"spring/spring-app.xml", "spring/spring-db.xml"}, false);
+    context.getEnvironment()
+        .setActiveProfiles(Profiles.getActiveDbProfile(), Profiles.REPOSITORY_IMPLEMENTATION);
+    context.refresh();
     mealController = context.getBean(MealRestController.class);
   }
   
