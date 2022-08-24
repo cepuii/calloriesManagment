@@ -26,6 +26,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.util.CollectionUtils;
 
@@ -34,6 +36,7 @@ import org.springframework.util.CollectionUtils;
  */
 @Entity
 @Table(name = "users")
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @NamedQueries({
     @NamedQuery(name = "User.DELETE", query = "DELETE FROM User u WHERE u.id=:id"),
     @NamedQuery(name = "User.BY_EMAIL", query = "SELECT u FROM User u LEFT JOIN FETCH u.roles WHERE u.email=?1"),
@@ -59,6 +62,7 @@ public class User extends AbstractNamedEntity {
   @NotNull
   private Date registered = new Date();
   @Enumerated(EnumType.STRING)
+  @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
   @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
       uniqueConstraints = {
           @UniqueConstraint(columnNames = {"user_id", "role"}, name = "uk_user_roles")})

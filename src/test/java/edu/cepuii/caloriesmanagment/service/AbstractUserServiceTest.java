@@ -13,6 +13,7 @@ import edu.cepuii.caloriesmanagment.MatcherFactory;
 import edu.cepuii.caloriesmanagment.MatcherFactory.Matcher;
 import edu.cepuii.caloriesmanagment.model.Role;
 import edu.cepuii.caloriesmanagment.model.User;
+import edu.cepuii.caloriesmanagment.repository.JpaUtil;
 import edu.cepuii.caloriesmanagment.util.exception.NotFoundException;
 import java.util.Collection;
 import org.hibernate.exception.ConstraintViolationException;
@@ -27,13 +28,16 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
   private final static Matcher<User> USER_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(
       "registered", "roles", "meals");
   @Autowired
-  private UserService service;
+  protected UserService service;
   @Autowired
   private CacheManager cacheManager;
+  @Autowired
+  protected JpaUtil jpaUtil;
   
   @Before
   public void setUp() {
     cacheManager.getCache("users").clear();
+    jpaUtil.clear2ndLevelHibernateCache();
   }
   
   @Test
