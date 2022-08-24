@@ -24,7 +24,7 @@ import org.springframework.dao.DataAccessException;
 public abstract class AbstractUserServiceTest extends AbstractServiceTest {
   
   private final static Matcher<User> USER_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(
-      "registered", "roles");
+      "registered", "roles", "meals");
   @Autowired
   private UserService service;
   @Autowired

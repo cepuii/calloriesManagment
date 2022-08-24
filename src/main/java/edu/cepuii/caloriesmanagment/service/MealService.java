@@ -3,6 +3,7 @@ package edu.cepuii.caloriesmanagment.service;
 import edu.cepuii.caloriesmanagment.model.Meal;
 import edu.cepuii.caloriesmanagment.repository.MealRepository;
 import edu.cepuii.caloriesmanagment.util.DateTimeUtil;
+import edu.cepuii.caloriesmanagment.util.ValidationUtil;
 import edu.cepuii.caloriesmanagment.util.exception.NotFoundException;
 import java.time.LocalDate;
 import java.util.Collection;
@@ -55,4 +56,7 @@ public class MealService {
         DateTimeUtil.atStartOfNextDayOrMax(endDate), userId);
   }
   
+  public Meal getWithUser(int id, int userId) {
+    return ValidationUtil.checkNotFoundWithId(repository.getWithUser(id, userId), id);
+  }
 }

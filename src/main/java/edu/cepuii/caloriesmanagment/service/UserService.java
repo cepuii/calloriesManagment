@@ -51,4 +51,8 @@ public class UserService {
   public Collection<User> getAll() {
     return repository.getAll();
   }
+  
+  public User getWithMeals(int id) {
+    return checkNotFoundWithId(repository.getWithMeals(id), id);
+  }
 }

@@ -2,6 +2,7 @@ package edu.cepuii.caloriesmanagment.repository.dataJpa;
 
 import edu.cepuii.caloriesmanagment.model.User;
 import java.util.Optional;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -17,4 +18,8 @@ public interface CrudUserRepository extends JpaRepository<User, Integer> {
   int delete(@Param("id") int id);
   
   Optional<User> findUserByEmail(String email);
+  
+  @EntityGraph(attributePaths = {"meals", "roles"})
+  @Query("SELECT u FROM User u WHERE u.id = ?1")
+  User getWithMeals(int id);
 }

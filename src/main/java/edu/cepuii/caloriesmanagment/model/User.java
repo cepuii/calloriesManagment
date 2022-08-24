@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.EnumSet;
+import java.util.List;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -16,12 +17,15 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.util.CollectionUtils;
 
@@ -33,7 +37,7 @@ import org.springframework.util.CollectionUtils;
 @NamedQueries({
     @NamedQuery(name = "User.DELETE", query = "DELETE FROM User u WHERE u.id=:id"),
     @NamedQuery(name = "User.BY_EMAIL", query = "SELECT u FROM User u LEFT JOIN FETCH u.roles WHERE u.email=?1"),
-    @NamedQuery(name = "User.ALL_SORTED", query = "SELECT u FROM User u LEFT JOIN FETCH u.roles ORDER BY u.name, u.email")
+    @NamedQuery(name = "User.ALL_SORTED", query = "SELECT u FROM User u ORDER BY u.name, u.email")
 })
 public class User extends AbstractNamedEntity {
   
@@ -60,10 +64,14 @@ public class User extends AbstractNamedEntity {
           @UniqueConstraint(columnNames = {"user_id", "role"}, name = "uk_user_roles")})
   @Column(name = "role")
   @ElementCollection(fetch = FetchType.EAGER)
+  @BatchSize(size = 200)
   private Collection<Role> roles;
   @Column(name = "calories_per_day", nullable = false, columnDefinition = "int default 2000")
   @Range(min = 10, max = 10000)
   private int caloriesPerDay = DEFAULT_CALORIES_PER_DAY;
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+  @OrderBy("dateTime DESC")
+  private List<Meal> meals;
   
   public User() {
   }
@@ -138,6 +146,10 @@ public class User extends AbstractNamedEntity {
   
   public void setCaloriesPerDay(int caloriesPerDay) {
     this.caloriesPerDay = caloriesPerDay;
+  }
+  
+  public List<Meal> getMeals() {
+    return meals;
   }
   
   @Override
