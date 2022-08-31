@@ -28,6 +28,8 @@ import javax.validation.constraints.Size;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.util.CollectionUtils;
 
@@ -69,12 +71,16 @@ public class User extends AbstractNamedEntity {
   @Column(name = "role")
   @ElementCollection(fetch = FetchType.EAGER)
   @BatchSize(size = 200)
+  @JoinColumn(name = "user_id")
+  @OnDelete(action = OnDeleteAction.CASCADE)
   private Collection<Role> roles;
   @Column(name = "calories_per_day", nullable = false, columnDefinition = "int default 2000")
   @Range(min = 10, max = 10000)
   private int caloriesPerDay = DEFAULT_CALORIES_PER_DAY;
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+//, cascade = CascadeType.REMOVE, orphanRemoval = true)
   @OrderBy("dateTime DESC")
+  @OnDelete(action = OnDeleteAction.CASCADE) //https://stackoverflow.com/a/44988100/548473
   private List<Meal> meals;
   
   public User() {
