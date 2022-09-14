@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: cepui
-  Date: 16.07.2022
-  Time: 21:22
-  To change this template use File | Settings | File Templates.
---%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
@@ -15,6 +8,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+<h3><a href="index.jsp">Home</a></h3>
 <h2>Meals</h2>
 <form method="get" action="mealsServlet">
     <input type="hidden" name="action" value="filter">
@@ -60,5 +54,6 @@
     </c:forEach>
 </table>
 <p><a href="mealsServlet?action=add">Add meal</a></p>
+<jsp:include page="fragments/footer.jsp"/>
 </body>
 </html>

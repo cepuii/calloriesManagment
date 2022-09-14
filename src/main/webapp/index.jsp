@@ -1,20 +1,21 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<!DOCTYPE html>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setBundle basename="messages.app"/>
 <html>
-<head>
-    <title>Calories management</title>
-</head>
+<jsp:include page="fragments/headTag.jsp"/>
 <body>
-<h1><%= "Hello World!" %>
-</h1>
-<hr/>
-<form method="post" action="usersServlet">
-    <b style="font-size: large">Meals of&nbsp;</b>
-    <select name="userId">
+<jsp:include page="fragments/bodyHeader.jsp"/>
+<br>
+<section>
+    <form method="post" action="usersServlet">
+        <fmt:message key="app.login"/>: <select name="userId">
         <option value="100000">User</option>
         <option value="100001">Admin</option>
     </select>
-    <button type="submit">Select</button>
-</form>
+        <button type="submit">Select</button>
+    </form>
+</section>
+<jsp:include page="fragments/footer.jsp"/>
 </body>
 </html>
