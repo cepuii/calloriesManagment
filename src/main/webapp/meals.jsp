@@ -1,15 +1,17 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page contentType="text/html;charset=UTF-8" %>
+<fmt:setBundle basename="messages.app"/>
 <html>
 <head>
     <meta charset="UTF-8">
     <title>Meals</title>
+    <jsp:include page="fragments/headTag.jsp"/>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<h3><a href="index.jsp">Home</a></h3>
-<h2>Meals</h2>
+<jsp:include page="fragments/bodyHeader.jsp"/>
+<h3><fmt:message key="meal.title"/></h3>
 <form method="get" action="mealsServlet">
     <input type="hidden" name="action" value="filter">
     <dl>
