@@ -7,6 +7,5 @@
   <import resource="spring-cache.xml"/>
 
   <context:component-scan base-package="edu.cepuii.**.service"/>
-  <context:component-scan base-package="edu.cepuii.**.web"/>
 
 </beans>
