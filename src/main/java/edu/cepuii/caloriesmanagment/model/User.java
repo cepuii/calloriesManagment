@@ -71,7 +71,7 @@ public class User extends AbstractNamedEntity {
   @Column(name = "role")
   @ElementCollection(fetch = FetchType.EAGER)
   @BatchSize(size = 200)
-  @JoinColumn(name = "user_id")
+  @JoinColumn(name = "id")
   @OnDelete(action = OnDeleteAction.CASCADE)
   private Collection<Role> roles;
   @Column(name = "calories_per_day", nullable = false, columnDefinition = "int default 2000")
